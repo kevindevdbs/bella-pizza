@@ -7,4 +7,19 @@ export const createProductSchema = z.object({
     category_id: z.string().min(1 , {message: "A categoria do produto é obrigatória"})
 })
 
+export const listProductsByCategorySchema = z.object({
+  category_id: z.string({ message: "O ID da Categoria é obrigatório" }),
+});
+
+export const listProductSchema = z.object({
+  disabled: z
+    .string()
+    .optional()
+    .refine((val) => val === undefined || val === "true" || val === "false", {
+      message: "O parâmetro disabled deve ser true ou false",
+    }),
+});
+
+export type listProductsByCategorySchema = z.infer<typeof listProductsByCategorySchema>
+export type listProductSchema = z.infer<typeof listProductSchema>;
 export type createProductSchema = z.infer<typeof createProductSchema>;

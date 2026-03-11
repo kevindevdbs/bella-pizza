@@ -1,13 +1,16 @@
 import z, { ZodError, ZodType } from "zod";
 import { NextFunction, Request, Response } from "express";
 
-z.config(z.locales.pt()); 
+z.config(z.locales.pt());
 
 export const validateSchema =
   (schema: ZodType) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await schema.parseAsync(req.body);
+      const dataToValidate =
+        req.method === "GET" || req.method === "DELETE" ? req.query : req.body;
+
+      await schema.parseAsync(dataToValidate);
 
       return next();
     } catch (error: unknown) {

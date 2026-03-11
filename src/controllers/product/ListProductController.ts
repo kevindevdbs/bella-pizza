@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ListProductService } from "../../services/product/ListProductService";
-import { listProductSchema } from "../../schemas/listProductSchema";
+import { listProductSchema } from "../../schemas/productSchema";
 
 interface IListProductQuery {
   disabled?: string;

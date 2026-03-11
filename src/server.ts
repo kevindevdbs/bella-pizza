@@ -10,10 +10,10 @@ app.use(cors());
 app.use(router);
 
 app.use((err: Error, _: Request, res: Response, _next: NextFunction) => {
+  console.log(err);
   if (err instanceof Error) {
     return res.status(400).json({ error: err.message });
   }
-
   return res.status(500).json({ error: "Erro Interno do Servidor." });
 });
 
