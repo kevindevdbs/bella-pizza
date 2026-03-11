@@ -1,6 +1,8 @@
 import z, { ZodError, ZodType } from "zod";
 import { NextFunction, Request, Response } from "express";
 
+z.config(z.locales.pt()); 
+
 export const validateSchema =
   (schema: ZodType) =>
   async (req: Request, res: Response, next: NextFunction) => {
