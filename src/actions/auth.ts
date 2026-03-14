@@ -1,9 +1,8 @@
 "use server";
 
 import { apiClient } from "@/lib/api";
-import { setToken } from "@/lib/auth";
+import { deleteToken, setToken } from "@/lib/auth";
 import { Session, User } from "@/lib/types";
-
 
 type RegisterActionState = {
   success: boolean;
@@ -27,17 +26,14 @@ export async function registerAction(
       body: JSON.stringify(data),
     });
 
-    return {success: true , error: "" , redirectTo: "/login"}
-
+    return { success: true, error: "", redirectTo: "/login" };
   } catch (error) {
-
-    if(error instanceof Error){
-        return {success: false , error: error.message}
+    if (error instanceof Error) {
+      return { success: false, error: error.message };
     }
 
-    return {success: false , error: "Erro ao criar conta"}
+    return { success: false, error: "Erro ao criar conta" };
   }
-
 }
 
 export async function loginAction(
@@ -48,7 +44,7 @@ export async function loginAction(
     const password = formData.get("password") as string;
     const email = formData.get("email") as string;
 
-    const data = {email, password };
+    const data = { email, password };
 
     const response = await apiClient<Session>("session", {
       method: "POST",
@@ -56,16 +52,17 @@ export async function loginAction(
     });
 
     await setToken(response.token);
-    
 
-    return {success: true , error: "" , redirectTo: "/dashboard"}
-
+    return { success: true, error: "", redirectTo: "/dashboard" };
   } catch (error) {
-
-    if(error instanceof Error){
-        return {success: false , error: error.message}
+    if (error instanceof Error) {
+      return { success: false, error: error.message };
     }
 
-    return {success: false , error: "Erro ao fazer login"}
+    return { success: false, error: "Erro ao fazer login" };
   }
+}
+
+export async function logoutAction() {
+  await deleteToken();
 }

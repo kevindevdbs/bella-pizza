@@ -19,21 +19,20 @@ import { Spinner } from "../ui/spinner";
 
 export function FormRegister() {
   const [state, formAction, isPending] = useActionState(registerAction, null);
-  const router = useRouter()
+  const router = useRouter();
 
-  useEffect(()=>{
-    if(state?.success && state.redirectTo)
-        router.replace(state.redirectTo)
-  },[state , router])
+  useEffect(() => {
+    if (state?.success && state.redirectTo) router.replace(state.redirectTo);
+  }, [state, router]);
 
   return (
-    <Card className="relative z-10 w-full max-w-md border border-white/10 bg-foreground/95 text-white shadow-2xl backdrop-blur">
+    <Card className="relative z-10 w-full max-w-md border-border/80 bg-card/95 text-card-foreground shadow-2xl backdrop-blur">
       <CardHeader className="space-y-1 text-center">
         <CardTitle className="text-4xl font-semibold tracking-tight">
-          <span className="text-white">Bella</span>
+          <span className="text-foreground">Bella</span>
           <span className="text-primary">Pizza</span>
         </CardTitle>
-        <CardDescription className="text-white/70">
+        <CardDescription className="text-muted-foreground">
           Preencha os dados para criar sua conta
         </CardDescription>
       </CardHeader>
@@ -41,7 +40,7 @@ export function FormRegister() {
       <CardContent>
         <form className="space-y-4" action={formAction}>
           <div className="space-y-2">
-            <Label htmlFor="name" className="text-white">
+            <Label htmlFor="name" className="text-foreground">
               Nome
             </Label>
             <Input
@@ -49,12 +48,12 @@ export function FormRegister() {
               name="name"
               type="text"
               placeholder="Seu nome completo..."
-              className="h-10 border-white/20 bg-white/5 text-white placeholder:text-white/40 focus-visible:border-primary"
+              className="h-10 border-input bg-background/60 text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-white">
+            <Label htmlFor="email" className="text-foreground">
               Email
             </Label>
             <Input
@@ -62,12 +61,12 @@ export function FormRegister() {
               name="email"
               type="email"
               placeholder="Seu email completo..."
-              className="h-10 border-white/20 bg-white/5 text-white placeholder:text-white/40 focus-visible:border-primary"
+              className="h-10 border-input bg-background/60 text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password" className="text-white">
+            <Label htmlFor="password" className="text-foreground">
               Senha
             </Label>
             <Input
@@ -76,7 +75,7 @@ export function FormRegister() {
               type="password"
               minLength={6}
               placeholder="••••••••"
-              className="h-10 border-white/20 bg-white/5 text-white placeholder:text-white/40 focus-visible:border-primary"
+              className="h-10 border-input bg-background/60 text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
             />
           </div>
 
@@ -89,16 +88,16 @@ export function FormRegister() {
           </Button>
 
           {state?.error ? (
-            <p className="text-center text-sm  bg-accent-foreground text-red-500 rounded-full p-2">
+            <p className="rounded-lg border border-destructive/40 bg-destructive/10 p-2 text-center text-sm text-destructive">
               {state.error}
             </p>
           ) : null}
 
-          <p className="text-center text-sm text-white/75">
+          <p className="text-center text-sm text-muted-foreground">
             Já tem uma conta?{" "}
             <Link
               href="/login"
-              className="font-semibold text-white hover:text-primary"
+              className="font-semibold text-foreground transition-colors hover:text-primary"
             >
               Faça login
             </Link>

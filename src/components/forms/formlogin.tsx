@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { loginAction } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
@@ -16,24 +16,23 @@ import { useActionState, useEffect } from "react";
 import { Spinner } from "../ui/spinner";
 
 export function FormLogin() {
+  const [state, formAction, isPending] = useActionState(loginAction, null);
+  const router = useRouter();
 
-  const [state , formAction , isPending] = useActionState(loginAction , null)
-  const router = useRouter()
-
-  useEffect(()=>{
-    if(state?.success && state.redirectTo){
-      router.replace(state.redirectTo)
+  useEffect(() => {
+    if (state?.success && state.redirectTo) {
+      router.replace(state.redirectTo);
     }
-  },[state , router])
+  }, [state, router]);
 
   return (
-    <Card className="relative z-10 w-full max-w-md border border-white/10 bg-foreground/95 text-white shadow-2xl backdrop-blur">
+    <Card className="relative z-10 w-full max-w-md border-border/80 bg-card/95 text-card-foreground shadow-2xl backdrop-blur">
       <CardHeader className="space-y-1 text-center">
         <CardTitle className="text-4xl font-semibold tracking-tight">
-          <span className="text-white">Bella</span>
+          <span className="text-foreground">Bella</span>
           <span className="text-primary">Pizza</span>
         </CardTitle>
-        <CardDescription className="text-white/70">
+        <CardDescription className="text-muted-foreground">
           Preencha os dados para acessar sua conta
         </CardDescription>
       </CardHeader>
@@ -41,7 +40,7 @@ export function FormLogin() {
       <CardContent>
         <form className="space-y-4" action={formAction}>
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-white">
+            <Label htmlFor="email" className="text-foreground">
               Email
             </Label>
             <Input
@@ -49,12 +48,12 @@ export function FormLogin() {
               name="email"
               type="email"
               placeholder="seu@email.com"
-              className="h-10 border-white/20 bg-white/5 text-white placeholder:text-white/40 focus-visible:border-primary"
+              className="h-10 border-input bg-background/60 text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="senha" className="text-white">
+            <Label htmlFor="password" className="text-foreground">
               Senha
             </Label>
             <Input
@@ -63,7 +62,7 @@ export function FormLogin() {
               type="password"
               placeholder="••••••••"
               minLength={6}
-              className="h-10 border-white/20 bg-white/5 text-white placeholder:text-white/40 focus-visible:border-primary"
+              className="h-10 border-input bg-background/60 text-foreground placeholder:text-muted-foreground focus-visible:border-ring"
             />
           </div>
 
@@ -76,7 +75,9 @@ export function FormLogin() {
           </Button>
 
           {state?.error ? (
-            <p className="text-center text-sm  bg-accent-foreground text-red-500 rounded-full p-2">{state.error}</p>
+            <p className="rounded-lg border border-destructive/40 bg-destructive/10 p-2 text-center text-sm text-destructive">
+              {state.error}
+            </p>
           ) : null}
         </form>
       </CardContent>
