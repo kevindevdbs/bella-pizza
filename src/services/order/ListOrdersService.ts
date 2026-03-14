@@ -21,6 +21,8 @@ export class ListOrdersService{
                     createdAt: true,
                     items: {
                         select:{
+                            id:true,
+                            amount: true,
                             product : {
                                 select:{
                                     id: true, 
