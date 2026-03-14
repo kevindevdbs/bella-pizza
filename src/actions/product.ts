@@ -15,7 +15,11 @@ function normalizePrice(rawPrice: string) {
     .replace(/\s/g, "")
     .replace(",", ".")
     .trim();
-  return normalized;
+  
+
+  const floatValue = parseFloat(normalized)
+  if(isNaN(floatValue)) return "0"
+  return Math.round(floatValue * 100).toString();
 }
 
 export async function createProductAction(

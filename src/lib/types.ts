@@ -30,3 +30,24 @@ export interface Session {
   role: "ADMIN" | "STAFF";
   token: string;
 }
+
+export interface OrderItem {
+  amount: number;
+  product: {
+    id: string;
+    name: string;
+    price: number;
+    imageUrl: string;
+    description: string;
+  };
+}
+
+export interface Order {
+  id: string;
+  name?: string;
+  draft: boolean;
+  table: number;
+  status: boolean;
+  createdAt: string;
+  items: OrderItem[];
+}

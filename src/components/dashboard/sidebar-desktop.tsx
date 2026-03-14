@@ -30,7 +30,8 @@ export function SidebarDesktop({ userName }: SidebarDesktopProps) {
       <div className="flex h-full flex-col bg-card text-card-foreground">
         <div className="border-b border-border px-4 py-6">
           <h2 className="text-3xl font-bold leading-none tracking-tight">
-            Bella<span className="text-primary">Pizza</span>
+            <span className="text-secondary">Bella</span>
+            <span className="text-primary">Pizza</span>
           </h2>
           <p className="mt-4 text-sm text-muted-foreground">Ola {userName}</p>
         </div>

@@ -3,6 +3,7 @@
 import { apiClient } from "@/lib/api";
 import { deleteToken, setToken } from "@/lib/auth";
 import { Session, User } from "@/lib/types";
+import { redirect } from "next/navigation";
 
 type RegisterActionState = {
   success: boolean;
@@ -65,4 +66,5 @@ export async function loginAction(
 
 export async function logoutAction() {
   await deleteToken();
+  redirect("/login")
 }

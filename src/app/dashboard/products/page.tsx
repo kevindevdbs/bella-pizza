@@ -26,7 +26,9 @@ type NormalizedProduct = {
 
 function formatPrice(value: number | string) {
   const numeric =
-    typeof value === "number" ? value : Number(String(value).replace(",", "."));
+    typeof value === "number"
+      ? value / 100
+      : Number(String(value).replace(",", ".")) / 100;
   if (!Number.isFinite(numeric)) {
     return "R$ 0,00";
   }
@@ -83,7 +85,7 @@ export default async function Products() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Produtos</h1>
           <p className="text-sm text-muted-foreground">
-            Gerencie o cardapio da pizzaria
+            Gerencie o cardapio da Pizzaria Forno D'Italia
           </p>
         </div>
 

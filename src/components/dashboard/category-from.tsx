@@ -50,7 +50,8 @@ export default function CategoryForm() {
               Criar nova categoria
             </DialogTitle>
             <DialogDescription>
-              Cadastre uma categoria para organizar os produtos da sua pizzaria.
+              Cadastre uma categoria para organizar os produtos da Pizzaria
+              Forno D'Italia.
             </DialogDescription>
           </DialogHeader>
 

@@ -38,7 +38,8 @@ export function SidebarMobile({ userName }: SidebarMobileProps) {
     <header className="fixed top-0 right-0 left-0 z-30 border-b border-border bg-background/95 px-4 py-3 backdrop-blur md:hidden">
       <div className="flex items-center justify-between">
         <span className="text-lg font-semibold text-foreground">
-          Bella<span className="text-primary">Pizza</span>
+          <span className="text-secondary">Bella</span>
+          <span className="text-primary">Pizza</span>
         </span>
 
         <Sheet>
@@ -60,7 +61,8 @@ export function SidebarMobile({ userName }: SidebarMobileProps) {
             <div className="flex h-full flex-col bg-card text-card-foreground">
               <div className="border-b border-border px-4 py-6">
                 <h2 className="text-3xl font-bold leading-none tracking-tight">
-                  Bella<span className="text-primary">Pizza</span>
+                  <span className="text-secondary">Bella</span>
+                  <span className="text-primary">Pizza</span>
                 </h2>
                 <p className="mt-4 text-sm text-muted-foreground">
                   Ola {userName}

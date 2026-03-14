@@ -1,7 +1,11 @@
+import ContentOrder from "@/components/dashboard/order";
+import { getToken } from "@/lib/auth";
 
+export default async function Dashboard() {
 
-export  default async function Dashboard() {
+  const token = await getToken() as string
 
-
-  return <div>dashboard</div>
+  return (
+    <ContentOrder  token= {token}/>
+  );
 }

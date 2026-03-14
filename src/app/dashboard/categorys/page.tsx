@@ -54,8 +54,8 @@ export default async function Categorys() {
               Nenhuma categoria cadastrada
             </CardTitle>
             <CardDescription className="text-muted-foreground">
-              Crie sua primeira categoria para organizar os produtos da
-              pizzaria.
+              Crie sua primeira categoria para organizar os produtos da Pizzaria
+              Forno D'Italia.
             </CardDescription>
           </CardHeader>
         </Card>

@@ -29,7 +29,7 @@ export function FormLogin() {
     <Card className="relative z-10 w-full max-w-md border-border/80 bg-card/95 text-card-foreground shadow-2xl backdrop-blur">
       <CardHeader className="space-y-1 text-center">
         <CardTitle className="text-4xl font-semibold tracking-tight">
-          <span className="text-foreground">Bella</span>
+          <span className="text-secondary">Bella</span>
           <span className="text-primary">Pizza</span>
         </CardTitle>
         <CardDescription className="text-muted-foreground">

@@ -1,8 +1,9 @@
 "use client";
 
-import { useActionState, useEffect, useMemo, useState } from "react";
+import { useActionState, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ImageUp, Plus } from "lucide-react";
+import Image from "next/image";
 import { createProductAction } from "@/actions/product";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,6 +39,7 @@ type ProductFormProps = {
 
 export default function ProductForm({ categories }: ProductFormProps) {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [state, formAction, isPending] = useActionState(
     createProductAction,
@@ -45,17 +47,36 @@ export default function ProductForm({ categories }: ProductFormProps) {
   );
   const [categoryId, setCategoryId] = useState("");
   const [fileName, setFileName] = useState("");
+  const [value, setValue] = useState("");
+  const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
     if (state?.success) {
       setOpen(false);
       setCategoryId("");
       setFileName("");
+      setPreview(null);
+      setValue("");
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
       router.refresh();
     }
   }, [state, router]);
 
   const hasCategories = useMemo(() => categories.length > 0, [categories]);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const removeString = e.target.value.replace(/\D/g, "");
+
+    const cents = removeString ? parseInt(removeString, 10) : 0;
+
+    const formatted = (cents / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+    setValue(formatted);
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -73,7 +94,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
               Novo Produto
             </DialogTitle>
             <DialogDescription>
-              Cadastre um novo item para o cardapio da pizzaria.
+              Cadastre um novo item para o cardapio da Pizzaria Forno D'Italia.
             </DialogDescription>
           </DialogHeader>
 
@@ -96,6 +117,8 @@ export default function ProductForm({ categories }: ProductFormProps) {
               <Input
                 id="price"
                 name="price"
+                value={value}
+                onChange={handleChange}
                 type="text"
                 placeholder="R$ 0,00"
                 className="h-10 bg-background/70"
@@ -147,16 +170,44 @@ export default function ProductForm({ categories }: ProductFormProps) {
 
           <div className="space-y-2">
             <Label htmlFor="file">Imagem do produto</Label>
-            <label
-              htmlFor="file"
-              className="flex min-h-24 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-border bg-background/40 px-4 py-4 text-center hover:bg-muted/40"
-            >
-              <ImageUp className="size-5 text-muted-foreground" />
-              <span className="mt-2 text-sm text-muted-foreground">
-                {fileName || "Clique para selecionar uma imagem"}
-              </span>
-            </label>
+            {preview ? (
+              <div className="space-y-3">
+                <div className="relative h-32 w-32 overflow-hidden rounded-md border border-border">
+                  <Image
+                    src={preview}
+                    alt="Preview"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setPreview(null);
+                    setFileName("");
+                    if (fileInputRef.current) {
+                      fileInputRef.current.value = "";
+                    }
+                  }}
+                >
+                  Remover imagem
+                </Button>
+              </div>
+            ) : (
+              <label
+                htmlFor="file"
+                className="flex min-h-24 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-border bg-background/40 px-4 py-4 text-center hover:bg-muted/40"
+              >
+                <ImageUp className="size-5 text-muted-foreground" />
+                <span className="mt-2 text-sm text-muted-foreground">
+                  Clique para selecionar uma imagem
+                </span>
+              </label>
+            )}
             <input
+              ref={fileInputRef}
               id="file"
               name="file"
               type="file"
@@ -165,6 +216,13 @@ export default function ProductForm({ categories }: ProductFormProps) {
               onChange={(event) => {
                 const currentFile = event.target.files?.[0];
                 setFileName(currentFile?.name ?? "");
+                if (currentFile) {
+                  const reader = new FileReader();
+                  reader.onload = (e) => setPreview(e.target?.result as string);
+                  reader.readAsDataURL(currentFile);
+                } else {
+                  setPreview(null);
+                }
               }}
               required
             />
