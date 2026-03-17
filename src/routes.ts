@@ -22,6 +22,7 @@ import { DeleteProductController } from "./controllers/product/DeleteProductCont
 import { ListProductsByCategoryController } from "./controllers/product/ListProductsByCategoryController";
 import {
   addItemOrderSchema,
+  activeOrderByTableSchema,
   createOrderSchema,
   deleteOrderSchema,
   detailOrderSchema,
@@ -29,6 +30,7 @@ import {
   listOrdersSchema,
   removeItemOrderSchema,
   sendOrderSchema,
+  updateOrderItemSchema,
 } from "./schemas/orderSchema";
 import { CreateOrderController } from "./controllers/order/CreateOrderController";
 import { ListOrdersController } from "./controllers/order/ListOrdersController";
@@ -38,6 +40,8 @@ import { DetailOrderController } from "./controllers/order/DetailOrderController
 import { SendOrderController } from "./controllers/order/SendOrderController";
 import { FinishOrderController } from "./controllers/order/FinishOrderController";
 import { DeleteOrderController } from "./controllers/order/DeleteOrderController";
+import { GetActiveOrderByTableController } from "./controllers/order/GetActiveOrderByTableController";
+import { UpdateOrderItemController } from "./controllers/order/UpdateOrderItemController";
 
 const router = Router();
 const upload = multer(uploadconfig);
@@ -129,6 +133,12 @@ router.get(
   validateSchema(detailOrderSchema),
   new DetailOrderController().handle,
 );
+router.get(
+  "/order/active-by-table",
+  isAuthenticated,
+  validateSchema(activeOrderByTableSchema),
+  new GetActiveOrderByTableController().handle,
+);
 
 router.post(
   "/order/add",
@@ -142,6 +152,12 @@ router.delete(
   isAuthenticated,
   validateSchema(removeItemOrderSchema),
   new RemoveItemOrderController().handle,
+);
+router.put(
+  "/order/item",
+  isAuthenticated,
+  validateSchema(updateOrderItemSchema),
+  new UpdateOrderItemController().handle,
 );
 
 router.put(
