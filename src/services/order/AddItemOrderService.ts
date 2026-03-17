@@ -1,13 +1,15 @@
 import { prisma } from "../../lib/prisma";
+import { OrderRealtimePublisher } from "./OrderRealtimePublisher";
 
 interface ItemProps {
   order_id: string;
   product_id: string;
   amount: number;
+  note?: string;
 }
 
 export class AddItemOrderService {
-  async execute({ order_id, product_id, amount }: ItemProps) {
+  async execute({ order_id, product_id, amount, note }: ItemProps) {
     const OrderExists = await prisma.order.findFirst({
       where: {
         id: order_id,
@@ -30,31 +32,41 @@ export class AddItemOrderService {
     }
 
     try {
-        const item = await prisma.item.create({
-            data:{
-                amount,
-                orderId : order_id,
-                productId: product_id
+      const item = await prisma.item.create({
+        data: {
+          amount,
+          note,
+          orderId: order_id,
+          productId: product_id,
+        },
+        select: {
+          id: true,
+          orderId: true,
+          productId: true,
+          amount: true,
+          note: true,
+          createdAt: true,
+          product: {
+            select: {
+              id: true,
+              name: true,
+              price: true,
+              description: true,
+              imageUrl: true,
             },
-            select:{
-                id: true,
-                orderId: true,
-                productId: true,
-                amount: true,
-                createdAt: true,
-                product:{
-                    select:{
-                        id:true,
-                        name: true,
-                        price: true,
-                        description: true,
-                        imageUrl: true,
-                    }
-                }
-            }
-        })
+          },
+        },
+      });
 
-        return item;
+      OrderRealtimePublisher.emitItemAdded({
+        orderId: item.orderId,
+        table: OrderExists.table,
+        itemId: item.id,
+        draft: OrderExists.draft,
+        status: OrderExists.status,
+      });
+
+      return item;
     } catch (error) {
       console.log(error);
       throw new Error("Não foi possivel adicionar o item");

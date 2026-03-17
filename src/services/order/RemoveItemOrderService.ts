@@ -1,4 +1,5 @@
 import { prisma } from "../../lib/prisma";
+import { OrderRealtimePublisher } from "./OrderRealtimePublisher";
 
 interface RemoveItemOrderProps {
   item_id: string;
@@ -9,6 +10,17 @@ export class RemoveItemOrderService {
     const itemExists = await prisma.item.findFirst({
       where: {
         id: item_id,
+      },
+      select: {
+        id: true,
+        orderId: true,
+        order: {
+          select: {
+            table: true,
+            draft: true,
+            status: true,
+          },
+        },
       },
     });
 
@@ -21,6 +33,14 @@ export class RemoveItemOrderService {
         where: {
           id: item_id,
         },
+      });
+
+      OrderRealtimePublisher.emitItemRemoved({
+        orderId: itemExists.orderId,
+        table: itemExists.order.table,
+        itemId: itemExists.id,
+        draft: itemExists.order.draft,
+        status: itemExists.order.status,
       });
     } catch (error) {
       console.log(error);

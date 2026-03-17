@@ -23,6 +23,7 @@ export class DetailOrderService {
             select: {
               id: true,
               amount: true,
+              note: true,
               createdAt: true,
               updatedAt: true,
               product: {

@@ -8,6 +8,6 @@ export class DeleteOrderController {
     const deleteOrderService = new DeleteOrderService();
     const result = await deleteOrderService.execute({ order_id });
 
-    return res.status(200).json({ message: result });
+    return res.status(200).json(result);
   }
 }
