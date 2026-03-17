@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  role Role @default(STAFF)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+@@map("users")
+}
+
+model Category{
+  id String @id @default(uuid())
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  products Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id String @id @default(uuid())
+  name String
+  price Int
+  description String
+  imageUrl String
+  disabled Boolean @default(false)
+  categoryId String
+  category Category @relation(fields: [categoryId], references: [id] , onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  items Item[]
+
+  @@map("products")
+}
+
+model Order {
+  id String @id @default(uuid())
+  table Int
+  status Boolean @default(false) //false = pendente, true = pronto
+  draft Boolean @default(true) // true = rascunho, false = finalizado
+  name String?
+  items Item[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  @@map("orders")
+}
+
+
+model Item{
+  id String @id @default(uuid())
+  orderId String
+  productId String
+  amount Int
+  note String?
+  order Order @relation(fields: [orderId], references: [id] , onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("items")
+}
+
+
+
+enum Role {
+  ADMIN
+  STAFF
+}
