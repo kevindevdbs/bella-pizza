@@ -20,12 +20,16 @@ import {
 type OrderDetailsProps = {
   orderId: string | null;
   token: string;
+  refreshTick: number;
+  highlightedItemIds?: string[];
   onClose: () => Promise<void> | void;
 };
 
 export default function OrderDetails({
   orderId,
   token,
+  refreshTick,
+  highlightedItemIds = [],
   onClose,
 }: OrderDetailsProps) {
   const [order, setOrder] = useState<Order | null>(null);
@@ -70,7 +74,7 @@ export default function OrderDetails({
     }
 
     void fetchOrder();
-  }, [orderId, token]);
+  }, [orderId, refreshTick, token]);
 
   async function handleFinishOrder() {
     if (!orderId) {
@@ -146,8 +150,12 @@ export default function OrderDetails({
 
                     return (
                       <li
-                        key={item.product.id + String(item.amount)}
-                        className="space-y-1 border-b border-border/50 pb-3 last:border-0 last:pb-0"
+                        key={item.id}
+                        className={`space-y-1 rounded border-b border-border/50 pb-3 last:border-0 last:pb-0 ${
+                          highlightedItemIds.includes(item.id)
+                            ? "bg-amber-500/10 px-2"
+                            : ""
+                        }`}
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div>
@@ -160,6 +168,11 @@ export default function OrderDetails({
                             <p className="text-xs text-muted-foreground">
                               Quantidade: {item.amount}
                             </p>
+                            {item.note ? (
+                              <p className="text-xs font-medium text-amber-700">
+                                Observação: {item.note}
+                              </p>
+                            ) : null}
                           </div>
                           <div className="text-right">
                             <p className="text-sm font-semibold">

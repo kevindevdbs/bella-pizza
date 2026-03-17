@@ -1,7 +1,34 @@
 const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL as string;
+const API_URL = process.env.API_URL as string | undefined;
+
+function resolveApiBaseUrl() {
+  if (!NEXT_PUBLIC_API_URL) {
+    throw new Error("NEXT_PUBLIC_API_URL nao foi configurada.");
+  }
+
+  if (typeof window === "undefined") {
+    return (API_URL || NEXT_PUBLIC_API_URL).replace(/\/$/, "");
+  }
+
+  try {
+    const url = new URL(NEXT_PUBLIC_API_URL);
+    const isLocalHost =
+      url.hostname === "localhost" ||
+      url.hostname === "127.0.0.1" ||
+      url.hostname === "::1";
+
+    if (isLocalHost) {
+      url.hostname = window.location.hostname;
+    }
+
+    return url.toString().replace(/\/$/, "");
+  } catch {
+    return NEXT_PUBLIC_API_URL.replace(/\/$/, "");
+  }
+}
 
 export function getApiUrl() {
-  return NEXT_PUBLIC_API_URL;
+  return resolveApiBaseUrl();
 }
 
 interface FetchOptions extends RequestInit {
@@ -31,7 +58,9 @@ export async function apiClient<T>(
   if (!(fetchOptions.body instanceof FormData)) {
     headers["Content-Type"] = "application/json";
   }
-  const response = await fetch(`${NEXT_PUBLIC_API_URL}/${endpoint}`, {
+  const apiBaseUrl = resolveApiBaseUrl();
+
+  const response = await fetch(`${apiBaseUrl}/${endpoint}`, {
     ...fetchOptions,
     headers,
   });

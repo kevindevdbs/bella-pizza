@@ -43,7 +43,7 @@ export function toOrderCardItems(order: Order): OrderCardItem[] {
 
   return orderItems
     .map((item, index) => ({
-      id: item?.product?.id ?? `${order.id}-${index}`,
+      id: item?.id ?? `${order.id}-${index}`,
       name: item?.product?.name ?? "Item sem nome",
       amount: Number(item.amount),
       unitPriceInCents: Number(item?.product?.price ?? 0),
