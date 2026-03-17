@@ -32,7 +32,9 @@ export interface Session {
 }
 
 export interface OrderItem {
+  id: string;
   amount: number;
+  note?: string | null;
   product: {
     id: string;
     name: string;

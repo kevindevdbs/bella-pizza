@@ -22,6 +22,8 @@ type OrderCardProps = {
     amount: number;
     unitPriceInCents: number;
   }>;
+  highlightedItemIds?: string[];
+  isRecentlyUpdated?: boolean;
 };
 
 export default function OrderCard({
@@ -33,9 +35,17 @@ export default function OrderCard({
   createdAtLabel,
   onOpenDetails,
   items,
+  highlightedItemIds = [],
+  isRecentlyUpdated = false,
 }: OrderCardProps) {
   return (
-    <Card className="border border-border bg-card/95 py-0 shadow-sm">
+    <Card
+      className={`border bg-card/95 py-0 shadow-sm transition-colors ${
+        isRecentlyUpdated
+          ? "border-amber-400/70 ring-2 ring-amber-400/30"
+          : "border-border"
+      }`}
+    >
       <CardHeader className="border-b border-border/60 px-4 py-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-1">
@@ -70,7 +80,14 @@ export default function OrderCard({
           {items.length > 0 ? (
             <ul className="space-y-1 text-sm text-card-foreground">
               {items.slice(0, 3).map((item) => (
-                <li key={item.id} className="truncate">
+                <li
+                  key={item.id}
+                  className={`truncate rounded px-1 py-0.5 ${
+                    highlightedItemIds.includes(item.id)
+                      ? "bg-amber-500/15 text-amber-700"
+                      : ""
+                  }`}
+                >
                   {item.amount}x - {item.name}
                 </li>
               ))}
