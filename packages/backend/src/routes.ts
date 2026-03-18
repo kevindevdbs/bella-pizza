@@ -42,6 +42,8 @@ import { FinishOrderController } from "./controllers/order/FinishOrderController
 import { DeleteOrderController } from "./controllers/order/DeleteOrderController";
 import { GetActiveOrderByTableController } from "./controllers/order/GetActiveOrderByTableController";
 import { UpdateOrderItemController } from "./controllers/order/UpdateOrderItemController";
+import { GetFinishedOrdersController } from "./controllers/order/GetFinishedOrdersController";
+import { GetOrdersStatisticsController } from "./controllers/order/GetOrdersStatisticsController";
 
 const router = Router();
 const upload = multer(uploadconfig);
@@ -126,6 +128,16 @@ router.get(
   isAuthenticated,
   validateSchema(listOrdersSchema),
   new ListOrdersController().handle,
+);
+router.get(
+  "/orders/finished",
+  isAuthenticated,
+  new GetFinishedOrdersController().handle,
+);
+router.get(
+  "/orders/statistics",
+  isAuthenticated,
+  new GetOrdersStatisticsController().handle,
 );
 router.get(
   "/order/detail",
