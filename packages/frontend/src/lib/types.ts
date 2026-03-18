@@ -53,3 +53,18 @@ export interface Order {
   createdAt: string;
   items: OrderItem[];
 }
+
+export interface OrderStatistics {
+  daily: {
+    count: number;
+    total: number;
+  };
+  monthly: {
+    count: number;
+    total: number;
+  };
+  yearly: {
+    count: number;
+    total: number;
+  };
+}
