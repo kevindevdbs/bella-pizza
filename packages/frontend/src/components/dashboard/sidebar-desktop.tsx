@@ -26,7 +26,7 @@ export function SidebarDesktop({ userName }: SidebarDesktopProps) {
   }
 
   return (
-    <aside className="hidden h-screen w-70 shrink-0 md:block">
+    <aside className="sticky top-0 hidden h-screen w-70 shrink-0 overflow-y-auto md:block">
       <div className="flex h-full flex-col bg-card text-card-foreground">
         <div className="border-b border-border px-4 py-6">
           <h2 className="text-3xl font-bold leading-none tracking-tight">
