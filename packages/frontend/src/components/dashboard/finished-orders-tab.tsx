@@ -81,7 +81,6 @@ export default function FinishedOrdersTab({ token }: FinishedOrdersTabProps) {
 
       setOrders(fetchedOrders || []);
 
-
       if (fetchedOrders && fetchedOrders.length > 0) {
         const totalCount = fetchedOrders.length;
         const totalValue = fetchedOrders.reduce((sum, order) => {
@@ -106,8 +105,6 @@ export default function FinishedOrdersTab({ token }: FinishedOrdersTabProps) {
       setLoading(false);
     }
   };
-
-
 
   useEffect(() => {
     if (!token) return;
@@ -174,7 +171,13 @@ export default function FinishedOrdersTab({ token }: FinishedOrdersTabProps) {
         {loading ? (
           <OrderSkeleton />
         ) : orders.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div
+            className={`grid gap-4 ${
+              orders.length === 1
+                ? "grid-cols-1"
+                : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            }`}
+          >
             {orders.map((order) => {
               const totalInCents = calculateOrderTotalInCents(order.items);
               const cardItems = toOrderCardItems(order);
