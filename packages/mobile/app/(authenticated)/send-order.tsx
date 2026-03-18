@@ -160,6 +160,8 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontSize: fontSize.xl,
     fontWeight: "700",
+    flex: 1,
+    textAlign: "center",
   },
   content: {
     flex: 1,

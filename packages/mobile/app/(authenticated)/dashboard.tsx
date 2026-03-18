@@ -203,13 +203,13 @@ const styles = StyleSheet.create({
     marginTop: 0,
     backgroundColor: colors.primary,
     borderRadius: borderRadius.md,
-    paddingHorizontal: spacing.md,
-    minWidth: 96,
-    height: 36,
+    paddingHorizontal: spacing.xl,
+    minWidth: 150,
+    height: 44,
   },
   signOutText: {
     color: colors.primaryForeground,
-    fontSize: fontSize.sm,
+    fontSize: fontSize.md,
     fontWeight: "700",
   },
   logoText: {
