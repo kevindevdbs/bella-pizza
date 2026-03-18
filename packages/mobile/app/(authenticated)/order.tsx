@@ -1,16 +1,9 @@
 import { AppButton } from "@/components/app-button";
 import { AppOrderItem } from "@/components/app-order-item";
-import { AppSelect } from "@/components/app-select";
+import { ProductSelector } from "@/components/ProductSelector";
 import { borderRadius, colors, fontSize, spacing } from "@/constants/theme";
 import api from "@/services/api";
-import {
-  Category,
-  CategoryProductsResponse,
-  DetailOrderResponse,
-  Items,
-  OrderRouteParams,
-  Product,
-} from "@/types";
+import { DetailOrderResponse, Items, OrderRouteParams, Product } from "@/types";
 import { Feather } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
@@ -45,13 +38,7 @@ export default function Order() {
   const [tableNumber, setTableNumber] = useState<number | null>(
     tableFromParams ? Number(tableFromParams) : null,
   );
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
   const [items, setItems] = useState<Items[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState("");
-  const [loadingCategories, setLoadingCategories] = useState(false);
-  const [loadingProducts, setLoadingProducts] = useState(false);
   const [loadingOrderDetails, setLoadingOrderDetails] = useState(false);
   const [addingItem, setAddingItem] = useState(false);
   const [deletingOrder, setDeletingOrder] = useState(false);
@@ -67,6 +54,7 @@ export default function Order() {
     [],
   );
   const [pendingAddedItems, setPendingAddedItems] = useState<Items[]>([]);
+  const [showProductSelector, setShowProductSelector] = useState(false);
 
   const isMutatingItems = addingItem || !!removingItemId || applyingSentChanges;
   const isUpdatingItems = loadingOrderDetails || isMutatingItems;
@@ -74,21 +62,6 @@ export default function Order() {
     pendingRemovedItemIds.length > 0 ||
     pendingAddedItems.length > 0 ||
     Object.keys(pendingNoteUpdates).length > 0;
-
-  const categoryOptions = useMemo(
-    () =>
-      categories.map((category) => ({
-        label: category.name,
-        value: category.id,
-      })),
-    [categories],
-  );
-
-  const productOptions = useMemo(
-    () =>
-      products.map((product) => ({ label: product.name, value: product.id })),
-    [products],
-  );
 
   useEffect(() => {
     if (!orderId) {
@@ -101,22 +74,8 @@ export default function Order() {
       return;
     }
 
-    void loadCategories();
     void loadOrderDetails(orderId);
   }, [orderId]);
-
-  async function loadCategories() {
-    try {
-      setLoadingCategories(true);
-      const response = await api.get<Category[]>("/category");
-      setCategories(response.data);
-    } catch (error) {
-      console.log(error);
-      Alert.alert("Erro", "Não foi possível carregar as categorias.");
-    } finally {
-      setLoadingCategories(false);
-    }
-  }
 
   async function loadOrderDetails(orderIdParam: string) {
     try {
@@ -137,93 +96,6 @@ export default function Order() {
       Alert.alert("Erro", "Não foi possível carregar os itens do pedido.");
     } finally {
       setLoadingOrderDetails(false);
-    }
-  }
-
-  async function handleSelectCategory(categoryId: string) {
-    setSelectedCategory(categoryId);
-    setSelectedProduct("");
-    setProducts([]);
-
-    if (!categoryId) return;
-
-    try {
-      setLoadingProducts(true);
-      const response = await api.get<CategoryProductsResponse | Product[]>(
-        "/category/products",
-        {
-          params: { category_id: categoryId },
-        },
-      );
-
-      const payload = response.data;
-      const productsResult = Array.isArray(payload)
-        ? payload
-        : (payload.result ?? []);
-
-      setProducts(productsResult);
-    } catch (error) {
-      console.log(error);
-      Alert.alert(
-        "Erro",
-        "Não foi possível carregar os produtos da categoria.",
-      );
-    } finally {
-      setLoadingProducts(false);
-    }
-  }
-
-  async function handleSelectProduct(productId: string) {
-    if (!orderId || !productId) return;
-
-    setSelectedProduct(productId);
-
-    if (isSentEditMode) {
-      const selectedProductData = products.find(
-        (item) => item.id === productId,
-      );
-
-      if (!selectedProductData) {
-        Alert.alert("Erro", "Produto selecionado não encontrado.");
-        return;
-      }
-
-      const tempItemId = `temp-item-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-
-      const tempItem: Items = {
-        id: tempItemId,
-        amount: 1,
-        note: null,
-        product: {
-          id: selectedProductData.id,
-          name: selectedProductData.name,
-          price: selectedProductData.price,
-          imageUrl: selectedProductData.imageUrl,
-          description: selectedProductData.description,
-        },
-      };
-
-      setItems((previous) => [...previous, tempItem]);
-      setPendingAddedItems((previous) => [...previous, tempItem]);
-      setSelectedProduct("");
-      return;
-    }
-
-    try {
-      setAddingItem(true);
-      await api.post("/order/add", {
-        order_id: orderId,
-        product_id: productId,
-        amount: 1,
-      });
-
-      await loadOrderDetails(orderId);
-      setSelectedProduct("");
-    } catch (error) {
-      console.log(error);
-      Alert.alert("Erro", "Não foi possível adicionar o item no pedido.");
-    } finally {
-      setAddingItem(false);
     }
   }
 
@@ -488,50 +360,15 @@ export default function Order() {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.label}>Categorias</Text>
-
-            <AppSelect
-              value={selectedCategory}
-              options={categoryOptions}
-              onValueChange={handleSelectCategory}
-              placeholder={
-                loadingCategories
-                  ? "Carregando categorias..."
-                  : "Selecione a categoria"
-              }
-              disabled={loadingCategories}
-            />
-
-            {loadingCategories ? (
-              <View style={styles.skeletonGroup}>
-                <View style={[styles.skeletonLine, styles.skeletonLineLarge]} />
-              </View>
-            ) : null}
-
-            {selectedCategory ? (
-              <AppSelect
-                value={selectedProduct}
-                options={productOptions}
-                onValueChange={handleSelectProduct}
-                placeholder={
-                  loadingProducts
-                    ? "Carregando produtos..."
-                    : addingItem
-                      ? "Adicionando item..."
-                      : "Selecione o produto"
-                }
-                disabled={
-                  loadingProducts || addingItem || productOptions.length === 0
-                }
-                containerStyle={styles.productsSelect}
-              />
-            ) : null}
-
-            {loadingProducts ? (
-              <View style={styles.skeletonGroup}>
-                <View style={[styles.skeletonLine, styles.skeletonLineLarge]} />
-              </View>
-            ) : null}
+            <Pressable
+              style={styles.gridSelectorButton}
+              onPress={() => setShowProductSelector(true)}
+            >
+              <Feather name="grid" size={18} color={colors.primaryForeground} />
+              <Text style={styles.gridSelectorButtonText}>
+                Adicionar Produtos
+              </Text>
+            </Pressable>
           </View>
 
           <View style={styles.section}>
@@ -638,6 +475,24 @@ export default function Order() {
             </View>
           </View>
         </Modal>
+
+        <Modal
+          transparent
+          animationType="slide"
+          visible={showProductSelector}
+          onRequestClose={() => setShowProductSelector(false)}
+        >
+          {orderId && (
+            <ProductSelector
+              orderId={orderId}
+              onProductAdded={() => {
+                loadOrderDetails(orderId);
+                setShowProductSelector(false);
+              }}
+              onClose={() => setShowProductSelector(false)}
+            />
+          )}
+        </Modal>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -684,6 +539,27 @@ const styles = StyleSheet.create({
   },
   productsSelect: {
     marginTop: spacing.sm,
+  },
+  gridSelectorButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.primary,
+    paddingVertical: spacing.md,
+    borderRadius: borderRadius.md,
+    gap: spacing.sm,
+    marginBottom: spacing.md,
+  },
+  gridSelectorButtonText: {
+    color: colors.primaryForeground,
+    fontSize: fontSize.md,
+    fontWeight: "600",
+  },
+  dividerText: {
+    color: colors.mutedText,
+    fontSize: fontSize.sm,
+    textAlign: "center",
+    marginVertical: spacing.md,
   },
   skeletonGroup: {
     marginTop: spacing.sm,
