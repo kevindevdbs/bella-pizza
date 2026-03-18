@@ -24,6 +24,7 @@ type OrderCardProps = {
   }>;
   highlightedItemIds?: string[];
   isRecentlyUpdated?: boolean;
+  hideActions?: boolean;
 };
 
 export default function OrderCard({
@@ -37,6 +38,7 @@ export default function OrderCard({
   items,
   highlightedItemIds = [],
   isRecentlyUpdated = false,
+  hideActions = false,
 }: OrderCardProps) {
   return (
     <Card
@@ -108,16 +110,18 @@ export default function OrderCard({
             {totalLabel}
           </strong>
         </div>
-        <Button
-          type="button"
-          size="sm"
-          variant="outline"
-          className="cursor-pointer"
-          onClick={() => onOpenDetails(orderId)}
-        >
-          <Eye className="size-3.5" />
-          Detalhes
-        </Button>
+        {!hideActions && (
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            className="cursor-pointer"
+            onClick={() => onOpenDetails(orderId)}
+          >
+            <Eye className="size-3.5" />
+            Detalhes
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
