@@ -62,6 +62,23 @@ export default function Login() {
             </Text>
           </View>
 
+          <View style={styles.testAccountCard}>
+            <Text style={styles.testAccountBadge}>Conta de Teste</Text>
+            <Text style={styles.testAccountDescription}>
+              Disponibilizamos uma conta para testar a aplicação:
+            </Text>
+            <View style={styles.testAccountInfo}>
+              <View style={styles.testAccountField}>
+                <Text style={styles.testAccountLabel}>Email:</Text>
+                <Text style={styles.testAccountValue}>teste@garcom.com</Text>
+              </View>
+              <View style={styles.testAccountField}>
+                <Text style={styles.testAccountLabel}>Senha:</Text>
+                <Text style={styles.testAccountValue}>123123</Text>
+              </View>
+            </View>
+          </View>
+
           <View style={styles.form}>
             <AppInput
               label="Digite seu email"
@@ -113,6 +130,53 @@ const styles = StyleSheet.create({
   },
   logoHighlight: {
     color: colors.primary,
+  },
+  testAccountCard: {
+    backgroundColor: "rgba(255, 0, 0, 0.05)",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "rgba(255, 0, 0, 0.2)",
+    padding: spacing.md,
+    marginBottom: spacing.lg,
+  },
+  testAccountBadge: {
+    backgroundColor: colors.primary,
+    color: colors.primaryForeground,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 6,
+    borderRadius: 6,
+    fontSize: fontSize.xs,
+    fontWeight: "600",
+    alignSelf: "flex-start",
+    marginBottom: spacing.sm,
+  },
+  testAccountDescription: {
+    color: colors.text,
+    fontSize: fontSize.sm,
+    marginBottom: spacing.md,
+    lineHeight: 20,
+  },
+  testAccountBold: {
+    fontWeight: "700",
+  },
+  testAccountInfo: {
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
+    borderRadius: 8,
+    padding: spacing.md,
+    gap: spacing.md,
+  },
+  testAccountField: {
+    gap: 4,
+  },
+  testAccountLabel: {
+    color: colors.mutedText,
+    fontSize: fontSize.xs,
+  },
+  testAccountValue: {
+    color: colors.text,
+    fontSize: fontSize.sm,
+    fontFamily: "Courier New",
+    fontWeight: "500",
   },
   form: {
     gap: spacing.md,
