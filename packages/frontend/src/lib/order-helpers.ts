@@ -5,6 +5,7 @@ export type OrderCardItem = {
   name: string;
   amount: number;
   unitPriceInCents: number;
+  note?: string | null;
 };
 
 export function formatPriceInCents(value: number) {
@@ -47,69 +48,68 @@ export function toOrderCardItems(order: Order): OrderCardItem[] {
       name: item?.product?.name ?? "Item sem nome",
       amount: Number(item.amount),
       unitPriceInCents: Number(item?.product?.price ?? 0),
+      note: item?.note ?? null,
     }))
     .filter((item) => Boolean(item.name));
 }
 
 export function getStartOfDay(date: Date): Date {
   const newDate = new Date(date);
-  newDate.setHours(0, 0, 0, 0);
+  newDate.setUTCHours(0, 0, 0, 0);
   return newDate;
 }
 
 export function getEndOfDay(date: Date): Date {
   const newDate = new Date(date);
-  newDate.setHours(23, 59, 59, 999);
+  newDate.setUTCHours(23, 59, 59, 999);
   return newDate;
 }
 
 export function getStartOfMonth(date: Date): Date {
-  return new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
+  return new Date(
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1, 0, 0, 0, 0)
+  );
 }
 
 export function getEndOfMonth(date: Date): Date {
-  const newDate = new Date(
-    date.getFullYear(),
-    date.getMonth() + 1,
-    0,
-    23,
-    59,
-    59,
-    999,
+  const lastDay = new Date(
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 0, 23, 59, 59, 999)
   );
-  return newDate;
+  return lastDay;
 }
 
 export function getStartOfWeek(date: Date): Date {
   const newDate = new Date(date);
-  const dayOfWeek = newDate.getDay();
-  const diff = newDate.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
-  newDate.setDate(diff);
-  newDate.setHours(0, 0, 0, 0);
+  const dayOfWeek = newDate.getUTCDay();
+  const diff = newDate.getUTCDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+  newDate.setUTCDate(diff);
+  newDate.setUTCHours(0, 0, 0, 0);
   return newDate;
 }
 
 export function getEndOfWeek(date: Date): Date {
   const newDate = new Date(date);
-  const dayOfWeek = newDate.getDay();
-  const diff = newDate.getDate() - dayOfWeek + (dayOfWeek === 0 ? 0 : 7);
-  newDate.setDate(diff);
-  newDate.setHours(23, 59, 59, 999);
+  const dayOfWeek = newDate.getUTCDay();
+  const diff = newDate.getUTCDate() - dayOfWeek + (dayOfWeek === 0 ? 0 : 7);
+  newDate.setUTCDate(diff);
+  newDate.setUTCHours(23, 59, 59, 999);
   return newDate;
 }
 
 export function getStartOfYear(date: Date): Date {
-  return new Date(date.getFullYear(), 0, 1, 0, 0, 0, 0);
+  return new Date(Date.UTC(date.getUTCFullYear(), 0, 1, 0, 0, 0, 0));
 }
 
 export function getEndOfYear(date: Date): Date {
-  return new Date(date.getFullYear(), 11, 31, 23, 59, 59, 999);
+  return new Date(
+    Date.UTC(date.getUTCFullYear(), 11, 31, 23, 59, 59, 999)
+  );
 }
 
 export function formatDateForAPI(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
 

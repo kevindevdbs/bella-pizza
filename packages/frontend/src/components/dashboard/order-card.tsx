@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { OrderCardItem } from "@/lib/order-helpers";
 
 type OrderCardProps = {
   orderId: string;
@@ -16,12 +17,7 @@ type OrderCardProps = {
   totalLabel: string;
   createdAtLabel: string;
   onOpenDetails: (orderId: string) => void;
-  items: Array<{
-    id: string;
-    name: string;
-    amount: number;
-    unitPriceInCents: number;
-  }>;
+  items: OrderCardItem[];
   highlightedItemIds?: string[];
   isRecentlyUpdated?: boolean;
   hideActions?: boolean;
@@ -80,17 +76,24 @@ export default function OrderCard({
             Itens do pedido
           </p>
           {items.length > 0 ? (
-            <ul className="space-y-1 text-sm text-card-foreground">
+            <ul className="space-y-2 text-sm text-card-foreground">
               {items.slice(0, 3).map((item) => (
                 <li
                   key={item.id}
-                  className={`truncate rounded px-1 py-0.5 ${
+                  className={`rounded px-1 py-0.5 ${
                     highlightedItemIds.includes(item.id)
                       ? "bg-amber-500/15 text-amber-700"
                       : ""
                   }`}
                 >
-                  {item.amount}x - {item.name}
+                  <div className="truncate">
+                    {item.amount}x - {item.name}
+                  </div>
+                  {item.note && (
+                    <div className="text-xs text-muted-foreground italic">
+                      Obs: {item.note}
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
