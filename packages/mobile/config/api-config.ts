@@ -1,4 +1,5 @@
 export const API_CONFIG = {
-  BASE_URL: "http://192.168.18.6:3333",
+  BASE_URL:
+    process.env.EXPO_PUBLIC_API_URL || "https://bella-pizza-eg1h.onrender.com",
   TIMEOUT: 12000,
 };
