@@ -120,23 +120,27 @@ router.post(
 router.delete(
   "/order",
   isAuthenticated,
+  isAdmin,
   validateSchema(deleteOrderSchema),
   new DeleteOrderController().handle,
 );
 router.get(
   "/orders",
   isAuthenticated,
+  isAdmin,
   validateSchema(listOrdersSchema),
   new ListOrdersController().handle,
 );
 router.get(
   "/orders/finished",
   isAuthenticated,
+  isAdmin,
   new GetFinishedOrdersController().handle,
 );
 router.get(
   "/orders/statistics",
   isAuthenticated,
+  isAdmin,
   new GetOrdersStatisticsController().handle,
 );
 router.get(
