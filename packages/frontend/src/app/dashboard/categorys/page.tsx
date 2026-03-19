@@ -55,7 +55,7 @@ export default async function Categorys() {
             </CardTitle>
             <CardDescription className="text-muted-foreground">
               Crie sua primeira categoria para organizar os produtos da Pizzaria
-              Forno D'Italia.
+              Bella Pizza.
             </CardDescription>
           </CardHeader>
         </Card>
