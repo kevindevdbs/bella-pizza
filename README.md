@@ -26,7 +26,7 @@ Uma **plataforma completa e moderna** para gerenciamento e venda de pizzas, dese
 
 ## 🎯 Visão Geral
 
-Bella Pizza é uma solução **full-stack** para e-commerce de pizzas com suporte a múltiplas plataformas:
+Bella Pizza é uma solução **full-stack** para gerenciamento de vendas e gestão de uma pizzaria com suporte a múltiplas plataformas:
 
 - **Web**: Dashboard administrativo e aplicação de cliente com Next.js
 - **Mobile**: Aplicação nativa com React Native (Expo) para iOS/Android
