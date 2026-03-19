@@ -1,4 +1,4 @@
-# 🍕 Bella Pizza - Plataforma de E-commerce de Pizzas
+# 🍕 Bella Pizza - Plataforma de Gerenciamento de Pizzaria
 
 Uma **plataforma completa e moderna** para gerenciamento e venda de pizzas, desenvolvida com as melhores práticas de arquitetura de software e tecnologias atuais do mercado.
 
