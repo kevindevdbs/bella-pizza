@@ -52,18 +52,37 @@ As capturas abaixo usam os arquivos atuais do projeto.
 
 ### Web
 
-![Login web](./docs/images/web/Login%20Web.jpeg)
-![Dashboard web](./docs/images/web/Dashboard%20Web.jpeg)
-![Categorias web](./docs/images/web/Categorias%20Web.jpeg)
-![Produtos web](./docs/images/web/Produtos%20Web.jpeg)
-![Modal criar produtos web](./docs/images/web/Modal%20Criar%20Produtos%20Web.jpeg)
+| Login | Dashboard |
+| --- | --- |
+| [![Login web](./docs/images/web/Login%20Web.jpeg)](./docs/images/web/Login%20Web.jpeg) | [![Dashboard web](./docs/images/web/Dashboard%20Web.jpeg)](./docs/images/web/Dashboard%20Web.jpeg) |
+
+| Categorias | Produtos |
+| --- | --- |
+| [![Categorias web](./docs/images/web/Categorias%20Web.jpeg)](./docs/images/web/Categorias%20Web.jpeg) | [![Produtos web](./docs/images/web/Produtos%20Web.jpeg)](./docs/images/web/Produtos%20Web.jpeg) |
+
+| Modal de Criacao de Produto |
+| --- |
+| [![Modal criar produtos web](./docs/images/web/Modal%20Criar%20Produtos%20Web.jpeg)](./docs/images/web/Modal%20Criar%20Produtos%20Web.jpeg) |
 
 ### Mobile
 
-![Login mobile](./docs/images/mobile/Login%20Mobile.jpeg)
-![Dashboard mobile](./docs/images/mobile/Dashboard%20Mobile.jpeg)
-![Grid de produtos mobile](./docs/images/mobile/Grid%20de%20Produtos%20Mobile.jpeg)
-![Pagina do pedido mobile](./docs/images/mobile/P%C3%A1gina%20do%20pedido.jpeg)
+<p align="center">
+   <a href="./docs/images/mobile/Login%20Mobile.jpeg">
+      <img src="./docs/images/mobile/Login%20Mobile.jpeg" alt="Login mobile" width="260" />
+   </a>
+   <a href="./docs/images/mobile/Dashboard%20Mobile.jpeg">
+      <img src="./docs/images/mobile/Dashboard%20Mobile.jpeg" alt="Dashboard mobile" width="260" />
+   </a>
+</p>
+
+<p align="center">
+   <a href="./docs/images/mobile/Grid%20de%20Produtos%20Mobile.jpeg">
+      <img src="./docs/images/mobile/Grid%20de%20Produtos%20Mobile.jpeg" alt="Grid de produtos mobile" width="260" />
+   </a>
+   <a href="./docs/images/mobile/P%C3%A1gina%20do%20pedido.jpeg">
+      <img src="./docs/images/mobile/P%C3%A1gina%20do%20pedido.jpeg" alt="Pagina do pedido mobile" width="260" />
+   </a>
+</p>
 
 ---
 
