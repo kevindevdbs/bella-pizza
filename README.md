@@ -14,6 +14,7 @@ Uma **plataforma completa e moderna** para gerenciamento e venda de pizzas, dese
 - [Stack Tecnológica](#-stack-tecnológica)
 - [Arquitetura](#-arquitetura)
 - [Features](#-features)
+- [Galeria de Imagens](#-galeria-de-imagens)
 - [Estrutura do Projeto](#-estrutura-do-projeto)
 - [Setup e Instalação](#-setup-e-instalação)
 - [Variáveis de Ambiente](#-variáveis-de-ambiente)
@@ -32,6 +33,37 @@ Bella Pizza é uma solução **full-stack** para e-commerce de pizzas com suport
 - **Backend**: API REST robusta com Express.js e PostgreSQL
 
 A plataforma foi desenvolvida com foco em **escalabilidade**, **performance** e **experiência do usuário**.
+
+### 🔗 Acessos Rápidos
+
+- **Aplicação Web (produção):** https://bella-pizza-kappa.vercel.app/
+- **Download APK (Android):** https://expo.dev/artifacts/eas/w1jwALMN2jre7znvqWCmio.apk
+
+---
+
+## 🖼️ Galeria de Imagens
+
+As imagens do README ficam organizadas em:
+
+- `docs/images/web/`
+- `docs/images/mobile/`
+
+As capturas abaixo usam os arquivos atuais do projeto.
+
+### Web
+
+![Login web](./docs/images/web/Login%20Web.jpeg)
+![Dashboard web](./docs/images/web/Dashboard%20Web.jpeg)
+![Categorias web](./docs/images/web/Categorias%20Web.jpeg)
+![Produtos web](./docs/images/web/Produtos%20Web.jpeg)
+![Modal criar produtos web](./docs/images/web/Modal%20Criar%20Produtos%20Web.jpeg)
+
+### Mobile
+
+![Login mobile](./docs/images/mobile/Login%20Mobile.jpeg)
+![Dashboard mobile](./docs/images/mobile/Dashboard%20Mobile.jpeg)
+![Grid de produtos mobile](./docs/images/mobile/Grid%20de%20Produtos%20Mobile.jpeg)
+![Pagina do pedido mobile](./docs/images/mobile/P%C3%A1gina%20do%20pedido.jpeg)
 
 ---
 
@@ -302,6 +334,22 @@ npm start
 # Pressione 'i' para iOS ou 'a' para Android
 ```
 
+#### Abrindo o app pelo Expo (Expo Go)
+
+1. Instale o app **Expo Go** no seu celular (Android/iOS).
+2. No projeto mobile, rode:
+
+```bash
+cd packages/mobile
+npm start
+```
+
+3. Com o QR Code exibido no terminal/browser:
+   - **Android:** abra o Expo Go e escaneie o QR Code
+   - **iOS:** use a câmera do iPhone para abrir no Expo Go
+4. Garanta que celular e computador estejam na mesma rede Wi-Fi.
+5. Se houver problema de conexão, no Expo Dev Tools troque para modo **Tunnel**.
+
 ### Instalação com Docker
 
 ```bash
@@ -311,6 +359,8 @@ docker-compose up -d
 # Backend: http://localhost:3333
 # Frontend: http://localhost:3000
 ```
+
+> **Importante:** para rodar com Docker, use o arquivo de ambiente igual ao `.env.example.docker` (copie o conteúdo e mantenha as mesmas variáveis/estrutura no `.env` de cada serviço).
 
 ---
 
