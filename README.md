@@ -38,6 +38,14 @@ A plataforma foi desenvolvida com foco em **escalabilidade**, **performance** e 
 
 - **Aplicação Web (produção):** https://bella-pizza-kappa.vercel.app/
 - **Download APK (Android):** https://expo.dev/artifacts/eas/w1jwALMN2jre7znvqWCmio.apk
+- **Rodar no Expo Go (local):**
+
+```bash
+cd packages/mobile
+npm start
+```
+
+Depois, escaneie o QR Code no **Expo Go** (Android) ou pela câmera do iPhone (iOS).
 
 ---
 
@@ -52,16 +60,16 @@ As capturas abaixo usam os arquivos atuais do projeto.
 
 ### Web
 
-| Login | Dashboard |
-| --- | --- |
+| Login                                                                                  | Dashboard                                                                                          |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | [![Login web](./docs/images/web/Login%20Web.jpeg)](./docs/images/web/Login%20Web.jpeg) | [![Dashboard web](./docs/images/web/Dashboard%20Web.jpeg)](./docs/images/web/Dashboard%20Web.jpeg) |
 
-| Categorias | Produtos |
-| --- | --- |
+| Categorias                                                                                            | Produtos                                                                                        |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | [![Categorias web](./docs/images/web/Categorias%20Web.jpeg)](./docs/images/web/Categorias%20Web.jpeg) | [![Produtos web](./docs/images/web/Produtos%20Web.jpeg)](./docs/images/web/Produtos%20Web.jpeg) |
 
-| Modal de Criacao de Produto |
-| --- |
+| Modal de Criacao de Produto                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------- |
 | [![Modal criar produtos web](./docs/images/web/Modal%20Criar%20Produtos%20Web.jpeg)](./docs/images/web/Modal%20Criar%20Produtos%20Web.jpeg) |
 
 ### Mobile
@@ -352,22 +360,6 @@ cd packages/mobile
 npm start
 # Pressione 'i' para iOS ou 'a' para Android
 ```
-
-#### Abrindo o app pelo Expo (Expo Go)
-
-1. Instale o app **Expo Go** no seu celular (Android/iOS).
-2. No projeto mobile, rode:
-
-```bash
-cd packages/mobile
-npm start
-```
-
-3. Com o QR Code exibido no terminal/browser:
-   - **Android:** abra o Expo Go e escaneie o QR Code
-   - **iOS:** use a câmera do iPhone para abrir no Expo Go
-4. Garanta que celular e computador estejam na mesma rede Wi-Fi.
-5. Se houver problema de conexão, no Expo Dev Tools troque para modo **Tunnel**.
 
 ### Instalação com Docker
 
